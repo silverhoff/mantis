@@ -25,15 +25,15 @@ def app(request, config):
     global fixture
     browser = request.config.getoption("--browser")
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, base_url=config['web']["baseurl"])
+        fixture = Application(browser=browser, config=config)
     return fixture
 
-@pytest.fixture(scope="session", autouse=True)
+'''@pytest.fixture(scope="session", autouse=True)
 def configure_server(request, config):
-    install_server_configuration(config['ftp']['host'],config['ftp']['username'], config['ftp']['password'])
+    install_server_configuration(config['ftp']['host'], config['ftp']['username'], config['ftp']['password'])
     def fin():
         restore_server_configuration(config['ftp']['host'],config['ftp']['username'], config['ftp']['password'])
-    request.addfinalizer(fin)
+    request.addfinalizer(fin)'''
 
 def install_server_configuration(host, username, password):
     with ftputil.FTPHost(host, username, password) as remote:
